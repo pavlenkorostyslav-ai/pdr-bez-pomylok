@@ -1,8 +1,79 @@
-ПДР без помилок
-pdr_bez_pomylok
-Тест без помилок
-← Усі тести
-🏆 Рейтинг
-Найкращі результати учасників, які створили кабінет. Пройди тести й потрап до списку!
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПДР без помилок — Рейтинг</title>
+<meta name="description" content="Рейтинг найкращих учасників тестів ПДР без помилок.">
+<link rel="stylesheet" href="assets/style.css">
 
-Помилка: Supabase client не ініціалізовано
+<meta property="og:type" content="website">
+<meta property="og:title" content="ПДР без помилок — Рейтинг">
+<meta property="og:description" content="Хто найкраще знає ПДР? Дивись рейтинг і приєднуйся.">
+<meta property="og:image" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/assets/og-image.jpg">
+<meta property="og:url" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/leaderboard.html">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<div class="site-header">
+  <a class="site-brand" href="index.html">
+    <img src="assets/logo.png" alt="ПДР без помилок">
+    <div>
+      <div class="site-brand-name">pdr_bez_pomylok</div>
+      <div class="site-brand-sub">Тест без помилок</div>
+    </div>
+  </a>
+  <a class="back-link" href="index.html">← Усі тести</a>
+</div>
+
+<div class="intro">
+  <h1>🏆 Рейтинг</h1>
+  <p>Найкращі результати учасників, які створили кабінет. Пройди тести й потрап до списку!</p>
+</div>
+
+<div class="archive" style="margin-top:20px;">
+  <div id="leaderboard-list" class="archive-list">
+    <div style="text-align:center;color:var(--text-dim);font-size:13px;padding:20px 0;">Завантаження рейтингу...</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/account.js"></script>
+<script>
+async function loadLeaderboard(){
+  const el = document.getElementById('leaderboard-list');
+  try{
+    if (typeof sb === 'undefined' || !sb) throw new Error('Supabase client не ініціалізовано');
+    const { data, error } = await sb.from('leaderboard').select('*').order('correct_count', {ascending:false}).limit(50);
+    if (error) throw error;
+    if (!data || !data.length){
+      el.innerHTML = `<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:20px 0;">Поки що тут порожньо — стань першим!</div>`;
+      return;
+    }
+    el.innerHTML = data.map((row, i) => {
+      const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`;
+      const pct = row.total_count ? Math.round(row.correct_count / row.total_count * 100) : 0;
+      return `
+        <div class="archive-item" style="cursor:default;">
+          <div class="archive-num">${medal}</div>
+          <div class="archive-info">
+            <div class="archive-day">${row.username}</div>
+            <div class="archive-topic">${row.correct_count} правильних із ${row.total_count} · ${pct}%</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch(err){
+    el.innerHTML = `<div style="text-align:center;color:var(--red);font-size:12.5px;padding:20px 16px;">Помилка: ${(err && err.message) || err}</div>`;
+  }
+}
+document.addEventListener('DOMContentLoaded', loadLeaderboard);
+</script>
+
+<!-- Аналітика GoatCounter -->
+<script data-goatcounter="https://pdr-bez-pomylok.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+</body>
+</html>
