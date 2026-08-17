@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПДР без помилок — Тест дня</title>
+<meta name="description" content="Щоденний міні-тест з Правил дорожнього руху України за офіційною базою тестових питань ГСЦ МВС. Одне питання на день — без помилок на екзамені.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="site-header">
+  <a class="site-brand" href="index.html">
+    <img src="assets/logo.png" alt="ПДР без помилок">
+    <div>
+      <div class="site-brand-name">pdr_bez_pomylok</div>
+      <div class="site-brand-sub">Тест без помилок</div>
+    </div>
+  </a>
+</div>
+
+<div class="intro">
+  <h1>Питання дня з ПДР</h1>
+  <p>Одне питання щодня за офіційною базою тестових питань ГСЦ МВС України. Перевір себе — і готуйся до іспиту без помилок.</p>
+</div>
+
+<div class="wrap" id="today-wrap">
+  <!-- Сюди JS підставляє картку останнього дня -->
+</div>
+
+<div class="archive">
+  <div class="archive-title">Архів питань</div>
+  <div class="archive-list" id="archive-list">
+    <!-- Список генерується JS з assets/days-data.js -->
+  </div>
+</div>
+
+<script src="assets/days-data.js"></script>
+<script>
+  // Сортуємо за спаданням (найновіший день перший)
+  const sorted = [...PDR_DAYS].sort((a,b)=>b.day-a.day);
+  const latest = sorted[0];
+
+  // Тест дня: вставляємо посилання-картку на найновіший день (сама вікторина живе на своїй сторінці,
+  // тут — привабливий блок з переходом, щоб не дублювати логіку відповідей).
+  const todayWrap = document.getElementById('today-wrap');
+  if (latest){
+    todayWrap.innerHTML = `
+      <a class="card" style="display:block;text-decoration:none;color:inherit;" href="${latest.file}">
+        <div class="brand">
+          <img class="brand-badge" src="assets/logo.png" alt="лого">
+          <div>
+            <div class="brand-name">pdr_bez_pomylok</div>
+            <div class="brand-sub">Тест дня · ${latest.date}</div>
+          </div>
+        </div>
+        <div class="hero">
+          <span class="day-tag">ПИТАННЯ ДНЯ №${latest.day}</span>
+          <div class="question">${latest.topic}</div>
+        </div>
+        <div style="padding:18px 20px 24px;text-align:center;">
+          <span style="display:inline-block;background:var(--yellow);color:#161200;font-weight:800;font-size:14px;padding:12px 24px;border-radius:30px;">Пройти тест →</span>
+        </div>
+      </a>
+    `;
+  }
+
+  // Архів
+  const list = document.getElementById('archive-list');
+  list.innerHTML = sorted.map(d => `
+    <a class="archive-item" href="${d.file}">
+      <div class="archive-num">№${d.day}</div>
+      <div class="archive-info">
+        <div class="archive-day">День ${d.day} · ${d.date}</div>
+        <div class="archive-topic">${d.topic}</div>
+      </div>
+      <div class="archive-arrow">→</div>
+    </a>
+  `).join('');
+</script>
+
+<!-- Аналітика GoatCounter: заміни YOURCODE на свій код після реєстрації на goatcounter.com -->
+<script data-goatcounter="https://YOURCODE.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+</body>
+</html>
