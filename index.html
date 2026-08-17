@@ -6,6 +6,13 @@
 <title>ПДР без помилок — Тест дня</title>
 <meta name="description" content="Щоденний міні-тест з Правил дорожнього руху України за офіційною базою тестових питань ГСЦ МВС. Одне питання на день — без помилок на екзамені.">
 <link rel="stylesheet" href="assets/style.css">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ПДР без помилок — Тест дня">
+<meta property="og:description" content="Щоденний міні-тест з ПДР України за офіційною базою ГСЦ МВС. Перевір себе!">
+<meta property="og:image" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/assets/og-image.jpg">
+<meta property="og:url" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -19,10 +26,15 @@
   </a>
 </div>
 
+<div class="account-wrap"><div id="account-widget"></div></div>
+
 <div class="intro">
   <h1>Питання дня з ПДР</h1>
-  <p>Одне питання щодня за офіційною базою тестових питань ГСЦ МВС України. Перевір себе — і готуйся до іспиту без помилок.</p>
+  <p>Одне питання щодня за офіційною базою тестових питань ГСЦ МВС України. Перевір себе — і готуйся до іспиту без помилок. Кабінет не обов'язковий — можна проходити тести і без реєстрації.</p>
 </div>
+
+<div class="stats-bar" id="stats-bar"></div>
+<div class="progress-wrap" id="progress-bar"></div>
 
 <div class="wrap" id="today-wrap">
   <!-- Сюди JS підставляє картку останнього дня -->
@@ -30,19 +42,42 @@
 
 <div class="archive">
   <div class="archive-title">Архів питань</div>
+  <div class="archive-filter">
+    <label><input type="checkbox" id="mistakes-filter" onchange="renderArchive()"> Тільки мої помилки</label>
+  </div>
   <div class="archive-list" id="archive-list">
     <!-- Список генерується JS з assets/days-data.js -->
   </div>
 </div>
 
+<div class="social-banner">
+  <div class="sb-title">Не пропускай жодного дня 📅</div>
+  <div class="sb-sub">Підписуйся на наші соцмережі — нові тести щодня</div>
+  <div class="social-pills">
+    <a class="pill-main" href="https://www.instagram.com/pdr_bez_pomylok/" target="_blank" rel="noopener">📷 Instagram</a>
+    <a href="https://www.threads.net/@pdr_bez_pomylok" target="_blank" rel="noopener">🧵 Threads</a>
+    <a href="https://www.facebook.com/share/1DqYQ7Z5QH/" target="_blank" rel="noopener">👍 Facebook</a>
+  </div>
+</div>
+
+<div class="social-banner">
+  <div class="sb-title">🌤️ Наш інший проєкт</div>
+  <div class="sb-sub">Погода по Ділу — персональний прогноз для родини</div>
+  <div class="social-pills">
+    <a class="pill-main" href="https://jcs8ztmgzm-a11y.github.io/-pogoda-po-dilu/" target="_blank" rel="noopener">Відкрити сайт</a>
+    <a href="https://www.instagram.com/pogoda_po_dilu" target="_blank" rel="noopener">📷 Instagram</a>
+    <a href="https://www.threads.com/@pogoda_po_dilu" target="_blank" rel="noopener">🧵 Threads</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/quiz.js"></script>
 <script src="assets/days-data.js"></script>
+<script src="assets/account.js"></script>
 <script>
-  // Сортуємо за спаданням (найновіший день перший)
   const sorted = [...PDR_DAYS].sort((a,b)=>b.day-a.day);
   const latest = sorted[0];
 
-  // Тест дня: вставляємо посилання-картку на найновіший день (сама вікторина живе на своїй сторінці,
-  // тут — привабливий блок з переходом, щоб не дублювати логіку відповідей).
   const todayWrap = document.getElementById('today-wrap');
   if (latest){
     todayWrap.innerHTML = `
@@ -65,21 +100,33 @@
     `;
   }
 
-  // Архів
-  const list = document.getElementById('archive-list');
-  list.innerHTML = sorted.map(d => `
-    <a class="archive-item" href="${d.file}">
-      <div class="archive-num">№${d.day}</div>
-      <div class="archive-info">
-        <div class="archive-day">День ${d.day} · ${d.date}</div>
-        <div class="archive-topic">${d.topic}</div>
-      </div>
-      <div class="archive-arrow">→</div>
-    </a>
-  `).join('');
+  function renderArchive(){
+    const onlyMistakes = document.getElementById('mistakes-filter').checked;
+    const results = getDayResults();
+    let list = sorted;
+    if (onlyMistakes) list = sorted.filter(d => results[String(d.day)] === 'wrong');
+
+    const el = document.getElementById('archive-list');
+    if (!list.length){
+      el.innerHTML = `<div style="text-align:center;color:var(--text-dim);font-size:13px;padding:20px 0;">Тут поки що нічого немає</div>`;
+      return;
+    }
+    el.innerHTML = list.map(d => `
+      <a class="archive-item" href="${d.file}">
+        <div class="archive-num">№${d.day}</div>
+        <div class="archive-info">
+          <div class="archive-day">День ${d.day} · ${d.date}</div>
+          <div class="archive-topic">${d.topic}</div>
+        </div>
+        <div class="archive-badge">${dayBadge(d.day)}</div>
+        <div class="archive-arrow">→</div>
+      </a>
+    `).join('');
+  }
+  renderArchive();
 </script>
 
-<!-- Аналітика GoatCounter: заміни pdr-bez-pomylok на свій код після реєстрації на goatcounter.com -->
+<!-- Аналітика GoatCounter -->
 <script data-goatcounter="https://pdr-bez-pomylok.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 
