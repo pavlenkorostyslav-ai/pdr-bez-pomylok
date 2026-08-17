@@ -4,10 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ПДР без помилок — Питання дня №1</title>
-<meta name="description" content="Питання 1: термін «Трамвайна колія» за ПДР України. Перевір себе за офіційною базою тестових питань ГСЦ МВС.">
+<meta name="description" content="Питання 1: Загальні положення — Трамвайна колія. Перевір себе за офіційною базою тестових питань ГСЦ МВС.">
 <link rel="stylesheet" href="../assets/style.css">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ПДР без помилок — Питання 1">
+<meta property="og:description" content="Загальні положення — Трамвайна колія. Перевір себе за офіційною базою ГСЦ МВС.">
+<meta property="og:image" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/assets/og-image.jpg">
+<meta property="og:url" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/days/den-01.html">
+<meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
+<body data-day="1">
 
 <div class="site-header">
   <a class="site-brand" href="../index.html">
@@ -19,6 +26,8 @@
   </a>
   <a class="back-link" href="../index.html">← Усі тести</a>
 </div>
+
+<div class="stats-bar" id="stats-bar"></div>
 
 <div class="wrap">
 <div class="card">
@@ -73,11 +82,20 @@
 
   <div class="footer">Джерело: офіційна база тестових питань ГСЦ МВС, наказ №225 від 29.10.2025</div>
 </div>
+
+<div id="next-question" style="display:none;"></div>
+
+<div class="share-bar" id="share-bar">
+  <button class="share-btn" id="share-btn" onclick="shareResult()">Поділитись тестом</button>
+</div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/days-data.js"></script>
 <script src="../assets/quiz.js"></script>
+<script src="../assets/account.js"></script>
 
-<!-- Аналітика GoatCounter: заміни pdr-bez-pomylok на свій код після реєстрації на goatcounter.com -->
+<!-- Аналітика GoatCounter -->
 <script data-goatcounter="https://pdr-bez-pomylok.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 
