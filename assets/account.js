@@ -2,7 +2,12 @@
 
 const SUPABASE_URL = 'https://bhjcxommeixlnwgvurhz.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_pUTt418HPH8VZwuLCoFjeQ_BVUdCure';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let sb = null;
+if (typeof supabase !== 'undefined'){
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+} else {
+  console.error('Supabase JS library did not load from CDN');
+}
 
 let currentUser = null;
 let currentProfile = null;
@@ -12,6 +17,11 @@ function accountPrefix(){
 }
 
 async function initAccount(){
+  if (!sb){
+    const el = document.getElementById('account-widget');
+    if (el) el.innerHTML = `<span class="acc-name" style="color:var(--red);">Помилка завантаження бібліотеки. Онови сторінку.</span>`;
+    return;
+  }
   const { data: { session } } = await sb.auth.getSession();
   if (session){
     currentUser = session.user;
