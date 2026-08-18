@@ -6,5 +6,6 @@ const PDR_DAYS = [
   { day: 3, file: "days/den-03.html", topic: "Смуга руху — визначення", date: "19.08.2026" },
   { day: 4, file: "days/den-04.html", topic: "Учасник дорожнього руху", date: "20.08.2026" },
   { day: 5, file: "days/den-05.html", topic: "Пасажир — визначення", date: "21.08.2026" },
-  { day: 6, file: "days/den-06.html", topic: "Пішохід — визначення", date: "18.08.2026" }
+  { day: 6, file: "days/den-06.html", topic: "Пішохід — визначення", date: "18.08.2026" },
+  { day: 7, file: "days/den-07.html", topic: "Тротуар — визначення", date: "18.08.2026" }
 ];
