@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПДР без помилок — Питання дня №6</title>
+<meta name="description" content="Питання 6: Пішохід — визначення. Перевір себе за офіційною базою тестових питань ГСЦ МВС.">
+<link rel="stylesheet" href="../assets/style.css">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ПДР без помилок — Питання 6">
+<meta property="og:description" content="Пішохід — визначення. Перевір себе за офіційною базою ГСЦ МВС.">
+<meta property="og:image" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/assets/og-image.jpg">
+<meta property="og:url" content="https://pavlenkorostyslav-ai.github.io/pdr-bez-pomylok/days/den-06.html">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-day="6">
+
+<div class="site-header">
+  <a class="site-brand" href="../index.html">
+    <img src="../assets/logo.png" alt="ПДР без помилок">
+    <div>
+      <div class="site-brand-name">pdr_bez_pomylok</div>
+      <div class="site-brand-sub">Тест без помилок</div>
+    </div>
+  </a>
+  <a class="back-link" href="../index.html">← Усі тести</a>
+</div>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<div class="wrap">
+<div class="card">
+  <div class="brand">
+    <img class="brand-badge" src="../assets/logo.png" alt="лого">
+    <div>
+      <div class="brand-name">pdr_bez_pomylok</div>
+      <div class="brand-sub">Питання дня · Розділ 1. Загальні положення</div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <span class="day-tag">ПИТАННЯ 6 · РОЗДІЛ 1</span>
+    <div class="question">Яка із наведених категорій осіб бере участь у дорожньому русі поза транспортними засобами та не виконує на дорозі будь-яку роботу:</div>
+  </div>
+
+  <div class="options" id="options"
+       data-correct-msg="✅ Правильно! Ключова ознака — відсутність будь-якої роботи на дорозі."
+       data-wrong-msg="❌ Неправильно. Правильна відповідь — варіант 1.">
+    <div class="opt" data-correct="true" onclick="answer(this)">
+      <div class="opt-num">1</div>
+      <div class="opt-text">Пішохід</div>
+    </div>
+    <div class="opt" data-correct="false" onclick="answer(this)">
+      <div class="opt-num">2</div>
+      <div class="opt-text">Пасажир</div>
+    </div>
+    <div class="opt" data-correct="false" onclick="answer(this)">
+      <div class="opt-num">3</div>
+      <div class="opt-text">Регулювальник</div>
+    </div>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+
+  <div class="rulebox" id="rulebox" style="display:none;">
+    <div class="rulebox-head">
+      <span>📘 ПРАВИЛА ПДР</span>
+      <span>Пункт 1.10</span>
+    </div>
+    <div class="rulebox-body">
+      «Пішохід — особа, яка бере участь у дорожньому русі поза транспортними засобами і не виконує на дорозі будь-яку роботу. До пішоходів прирівнюються також особи, які рухаються в кріслах колісних без двигуна, ведуть велосипед, мопед, мотоцикл, везуть санки, візок, дитячу коляску чи крісло колісне.»
+      <br>
+      <span class="rulebox-src">Постанова КМУ від 10.10.2001 № 1306 (чинна редакція)</span>
+    </div>
+  </div>
+
+  <div class="remember" id="remember" style="display:none;">
+    <div class="remember-icon">☝️</div>
+    <div>ЗАПАМ'ЯТАЙ: той, хто виконує роботу на проїзній частині (дорожник, регулювальник) — не є пішоходом.</div>
+  </div>
+
+  <div class="footer">Джерело: офіційна база тестових питань ГСЦ МВС, наказ №225 від 29.10.2025</div>
+</div>
+
+<div id="next-question" style="display:none;"></div>
+
+<div class="share-bar" id="share-bar">
+  <button class="share-btn" id="share-btn" onclick="shareResult()">Поділитись тестом</button>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/days-data.js"></script>
+<script src="../assets/quiz.js"></script>
+<script src="../assets/account.js"></script>
+
+<!-- Аналітика GoatCounter -->
+<script data-goatcounter="https://pdr-bez-pomylok.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+</body>
+</html>
